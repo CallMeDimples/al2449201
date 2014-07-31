@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <iomanip>
 #include <cmath>
+#include <fstream>
+#include <string>
 using namespace std;
  
 //User Libraries
@@ -25,7 +27,7 @@ const int BODY=1;
 
 //Function Prototypes
 void sortArray(int [],int);
-void showInstructions();
+void showRules();
 int sum1(int,int,int,int,int,int);
 int sum2(int,int,int,int,int,int);
 
@@ -41,26 +43,42 @@ int main(int argc, char** argv) {
     //Would you like to play again?
     do
     {
-        //Introduce game by calling the function definition 
-        showInstructions();
-        
-        //Define Variables
-        char name1[20],   //Some people may have a long name
-             name2[20]; 
+        //Introduce game by calling the definition
+        showRules(); 
 
         int tossB[PLAYERS2][BODY],//Players toss for the body
-            dice,      //Numbers [1,6] resembling a die
+            dice, //Numbers [1,6] resembling a die
             throwsB[PLAYERS2][BODY],//Utilized for the for loop
             total1,
             total2;
 
-        //Decide who is first player
-        cout<<"Please insert the first name."<<endl;
+        //Choose names by entering into a file then exporting from the file
+        ofstream outputFile;
+        ifstream inputFile;
+        
+        string name, name1, name2;
+        
+        outputFile.open("names.txt");
+        inputFile.open("names.txt");
+        
+        cout<<"Enter player 1's name."<<endl;
         cin>>name1;
-        cout<<"Please enter the second name."<<endl;
+        cout<<"Enter player 2's name."<<endl;
         cin>>name2;
-        cout<<"\n";
-
+        
+        outputFile<<name1<<endl;
+        outputFile<<name2<<endl;
+        
+        outputFile.close();
+        
+        inputFile>>name;
+        cout<<"\nYou typed "<<name;
+        
+        inputFile>>name;
+        cout<<" and "<<name<<"\n"<<endl;
+        
+        inputFile.close();
+        
         do{
             //Set the size of the dice
             dice=rand()%6+1;
@@ -459,19 +477,19 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-void showInstructions()
+void showRules()
 {
-           cout<<"~~Welcome to the Beetle game!~~\n"<<endl;
-           cout<<"In this game you need to be the first to draw a complete beetle.\n"
-                "Each number on the die represents a part of a beetle.\n"
-                "To get a body, which is the first thing you must get before "
-                "you draw anything else, you must roll a 6. \n"
-                "To get a head, which you must get before eyes and the antenna,"
-                "you must roll a 5.\nTo get eyes you must roll 1 and since there are "
-                "two eyes, you must roll a 1 twice.\nTo get the antenna you must roll"
-                "a 2 twice.\nTo get the legs you must roll a 3 six times.\n"
-                "To get wings you must roll a 4 twice.\nThe first player to complete "
-                "their beetle will be the winner!\n"<<endl;
+    cout<<"~~Welcome to the Beetle game!~~\n"<<endl;
+    cout<<"In this game you need to be the first to draw a complete beetle.\n"
+        "Each number on the die represents a part of a beetle.\n"
+        "To get a body, which is the first thing you must get before "
+        "you draw anything else, you must roll a 6. \n"
+        "To get a head, which you must get before eyes and the antenna,"
+        "you must roll a 5.\nTo get eyes you must roll 1 and since there are "
+        "two eyes, you must roll a 1 twice.\nTo get the antenna you must roll"
+        "a 2 twice.\nTo get the legs you must roll a 3 six times.\n"
+        "To get wings you must roll a 4 twice.\nThe first player to complete "
+        "their beetle will be the winner!\n"<<endl;
 }
 
 int sum1(int num1, int num3, int num5, int num7, int num9, int num11)
