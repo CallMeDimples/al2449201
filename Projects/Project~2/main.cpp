@@ -24,6 +24,7 @@ const int HEAD=1;
 const int BODY=1;
 
 //Function Prototypes
+void sortArray(int [],int);
 void showInstructions();
 int sum1(int,int,int,int,int,int);
 int sum2(int,int,int,int,int,int);
@@ -427,9 +428,14 @@ int main(int argc, char** argv) {
         total1=sum1(tossB[0][0],tossH[0][0],sumE[0],sumA[0],sumW[0],sumL[0]);
         total2=sum2(tossB[1][0],tossH[0][0],sumE[1],sumA[1],sumW[1],sumL[1]);
 
-        //Show total of all throws
-        cout<<name1<<"'s throw total is "<<total1<<endl;
-        cout<<name2<<"'s throw total is "<<total2<<endl;
+        //Define array for sort array
+        int totals[2]={total1,total2};
+
+        //Show total of all throws by using a sort array 
+        cout<<"The totals are..."<<endl;
+        sortArray(totals,2);
+        
+        cout<<totals[0]<<" "<<totals[1]<<endl;
 
         if (total1<total2)
         {
@@ -468,12 +474,33 @@ void showInstructions()
                 "their beetle will be the winner!\n"<<endl;
 }
 
-    int sum1(int num1, int num3, int num5, int num7, int num9, int num11)
-    { 
-        return num1+num3+num5+num7+num9+num11;  
-    }
+int sum1(int num1, int num3, int num5, int num7, int num9, int num11)
+{ 
+    return num1+num3+num5+num7+num9+num11;  
+}
 
-    int sum2(int num2, int num4, int num6, int num8, int num10, int num12)
+int sum2(int num2, int num4, int num6, int num8, int num10, int num12)
+{
+    return num2+num4+num6+num8+num10+num12;  
+}
+    
+void sortArray (int array[], int size)
+{
+    bool swap;
+    int dumnum;
+    
+    do
     {
-        return num2+num4+num6+num8+num10+num12;  
-    }
+        swap=false;
+        for(int count=0;count<(size-1);count++)
+        {
+            if(array[count]>array[count+1])
+            {
+                dumnum=array[count];
+                array[count]=array[count+1];
+                array[count+1]=dumnum;
+                swap=true;
+            }
+        }
+    }while(swap);
+}
